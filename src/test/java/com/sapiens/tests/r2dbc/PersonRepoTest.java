@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.r2dbc.core.DatabaseClient;
 import org.springframework.test.context.junit4.SpringRunner;
+import reactor.core.publisher.Flux;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -51,7 +52,8 @@ public class PersonRepoTest {
         Person p = new Person(null, "AAA", data);
         personRepo.save(p).block();
 
-        Person p1 = personRepo.findById(p.getId()).block();
+        Person p1 = personRepo.findByX("xxx").blockFirst();
+//        Person p1 = personRepo.findByX().blockFirst();
         Assert.assertEquals(p.getName(), p1.getName());
     }
 }
