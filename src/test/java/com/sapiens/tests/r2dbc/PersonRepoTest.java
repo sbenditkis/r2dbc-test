@@ -53,6 +53,8 @@ public class PersonRepoTest {
         personRepo.save(p).block();
 
         Person p1 = personRepo.findByX("xxx").blockFirst();
+//        Person p1 = personRepo.findByID(p.getId()).block();
+
 //        Person p1 = personRepo.findByX().blockFirst();
         Assert.assertEquals(p.getName(), p1.getName());
     }
