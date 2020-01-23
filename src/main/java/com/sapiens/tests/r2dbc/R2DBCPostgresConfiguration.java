@@ -3,24 +3,22 @@ package com.sapiens.tests.r2dbc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sapiens.tests.r2dbc.repo.JsonToMapConverter;
 import com.sapiens.tests.r2dbc.repo.MapToJsonConverter;
-import io.r2dbc.h2.H2ConnectionConfiguration;
-import io.r2dbc.h2.H2ConnectionFactory;
 import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
 import io.r2dbc.postgresql.PostgresqlConnectionFactory;
 import io.r2dbc.spi.ConnectionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration;
 import org.springframework.data.r2dbc.convert.R2dbcCustomConversions;
-import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@EnableR2dbcRepositories
-public class R2DBCConfiguration extends AbstractR2dbcConfiguration {
+@Profile("PG")
+public class R2DBCPostgresConfiguration extends AbstractR2dbcConfiguration {
 
     public ConnectionFactory connectionFactory() {
 //        return new H2ConnectionFactory(

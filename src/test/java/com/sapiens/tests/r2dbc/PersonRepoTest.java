@@ -3,21 +3,19 @@ package com.sapiens.tests.r2dbc;
 import com.sapiens.tests.r2dbc.model.Person;
 import com.sapiens.tests.r2dbc.repo.PersonRepo;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.r2dbc.core.DatabaseClient;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import reactor.core.publisher.Flux;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Config.class)
+@ActiveProfiles("PG")
+//@ActiveProfiles("MSSQL")
 public class PersonRepoTest {
 
     @Autowired
@@ -53,9 +51,6 @@ public class PersonRepoTest {
         personRepo.save(p).block();
 
         Person p1 = personRepo.findByX("xxx").blockFirst();
-//        Person p1 = personRepo.findByID(p.getId()).block();
-
-//        Person p1 = personRepo.findByX().blockFirst();
         Assert.assertEquals(p.getName(), p1.getName());
     }
 }
