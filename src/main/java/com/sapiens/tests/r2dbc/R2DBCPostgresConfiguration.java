@@ -2,7 +2,9 @@ package com.sapiens.tests.r2dbc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sapiens.tests.r2dbc.repo.JsonToMapConverter;
+import com.sapiens.tests.r2dbc.repo.JsonToStringConverter;
 import com.sapiens.tests.r2dbc.repo.MapToJsonConverter;
+import com.sapiens.tests.r2dbc.repo.StringToJsonConverter;
 import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
 import io.r2dbc.postgresql.PostgresqlConnectionFactory;
 import io.r2dbc.spi.ConnectionFactory;
@@ -30,7 +32,7 @@ public class R2DBCPostgresConfiguration extends AbstractR2dbcConfiguration {
     return new PostgresqlConnectionFactory(
             PostgresqlConnectionConfiguration.builder()
                     .host("localhost")
-                    .database("test1")
+                    .database("dec_test1")
                     .username("postgres")
                     .password("postgres")
                     .build()
@@ -43,6 +45,8 @@ public class R2DBCPostgresConfiguration extends AbstractR2dbcConfiguration {
         List<Converter<?, ?>> converters = new ArrayList<>();
         converters.add(new JsonToMapConverter(objectMapper()));
         converters.add(new MapToJsonConverter(objectMapper()));
+        converters.add(new StringToJsonConverter());
+        converters.add(new JsonToStringConverter());
         return new R2dbcCustomConversions(getStoreConversions(), converters);
     }
 

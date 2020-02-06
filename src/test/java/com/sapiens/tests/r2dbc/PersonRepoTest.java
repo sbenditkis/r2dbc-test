@@ -14,33 +14,12 @@ import java.util.HashMap;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Config.class)
-@ActiveProfiles("PG")
-//@ActiveProfiles("MSSQL")
+//@ActiveProfiles("PG")
+@ActiveProfiles("MSSQL")
 public class PersonRepoTest {
 
     @Autowired
     PersonRepo personRepo;
-
-//    @Autowired
-//    DatabaseClient client;
-
-    /*
-    @Before
-    public void setUp() {
-        Hooks.onOperatorDebug();
-
-        List<String> statements = Arrays.asList(//
-                "DROP TABLE IF EXISTS person;",
-                "CREATE table person (id INT AUTO_INCREMENT NOT NULL, name VARCHAR2, data jsonb);");
-
-        statements.forEach(it -> client.execute(it) //
-                .fetch() //
-                .rowsUpdated() //
-                .as(StepVerifier::create) //
-                .expectNextCount(1) //
-                .verifyComplete());
-    }
-    */
 
     @Test
     public void testCreate() {

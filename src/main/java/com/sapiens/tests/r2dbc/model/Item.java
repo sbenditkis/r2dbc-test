@@ -11,10 +11,10 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Person {
+@Table("items")
+public class Item {
     @Id
     private Integer id;
-    private String name;
 
-    Map<String, Object> data;
+    String data;
 }
