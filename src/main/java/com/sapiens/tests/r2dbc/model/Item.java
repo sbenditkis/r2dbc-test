@@ -16,5 +16,5 @@ public class Item {
     @Id
     private Integer id;
 
-    String data;
+    private String data;
 }
