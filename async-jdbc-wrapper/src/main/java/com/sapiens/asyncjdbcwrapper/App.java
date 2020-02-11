@@ -9,7 +9,6 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 public class App {
 
     public static void main(String[] args) throws Exception {
-        Class.forName("org.postgresql.Driver");
         SpringApplication.run(App.class, args);
     }
 }

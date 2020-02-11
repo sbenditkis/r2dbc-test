@@ -2,13 +2,16 @@ package com.sapiens.asyncjdbcwrapper.jdbc;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 
 @Data
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ResultSetContext {
-    private Connection connection;
-    private ResultSet rs;
+    private final Connection connection;
+    private final ResultSet rs;
+    private final int chunkSize;
+    private int totalRead = 0;
 }
