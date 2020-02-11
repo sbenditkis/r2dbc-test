@@ -20,7 +20,7 @@ public class DataSourceProvider {
         cpds.setMinPoolSize(5);
         cpds.setAcquireIncrement(5);
         cpds.setMaxPoolSize(50);
-        cpds.setMaxStatements(0);
+//        cpds.setMaxStatements(0);
     }
 
     public DataSource getDataSource() {

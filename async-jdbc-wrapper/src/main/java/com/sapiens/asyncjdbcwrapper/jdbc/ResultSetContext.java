@@ -14,4 +14,5 @@ public class ResultSetContext {
     private final ResultSet rs;
     private final int chunkSize;
     private int totalRead = 0;
+    private boolean finishedRead = false;
 }

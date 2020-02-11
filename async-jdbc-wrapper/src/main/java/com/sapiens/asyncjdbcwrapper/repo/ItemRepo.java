@@ -32,30 +32,41 @@ public class ItemRepo {
             } catch (SQLException ex) {
                 return Mono.error(ex);
             }
-        }).flatMapMany(resultSetContext -> Flux.generate(() -> resultSetContext, (rsc, sink) -> {
-            try {
-                ResultSet rs = rsc.getRs();
-                if (rs.next()) {
-                    String data = rs.getString("data");
-                    sink.next(data);
+        }).<String>flatMapMany(rsc -> Flux.create(sink -> {
+            Flux.generate(() -> 0, (chunk, s) -> {
+                if(rsc.isFinishedRead()) {
+                    s.complete();
                 } else {
-                    rs.close();
-                    rsc.getConnection().close();
-                    sink.complete();
+                    s.next(chunk);
                 }
-            } catch (SQLException ex) {
-                try {
-                    rsc.getRs().close();
-                    rsc.getConnection().close();
-                    sink.error(ex);
-                } catch (SQLException ex2) {
-                    ex2.printStackTrace();
+                return chunk + 1;
+            }).subscribe(chunk-> {
+                for (int i = 0; i < rsc.getChunkSize(); i++) {
+                    try {
+                        ResultSet rs = rsc.getRs();
+                        if (rs.next()) {
+                            String data = rs.getString("data");
+                            sink.next(data);
+                        } else {
+                            rs.close();
+                            rsc.getConnection().close();
+                            sink.complete();
+                            rsc.setFinishedRead(true);
+                            break;
+                        }
+                    } catch (SQLException ex) {
+                        try {
+                            rsc.getRs().close();
+                            rsc.getConnection().close();
+                            sink.error(ex);
+                        } catch (SQLException ex2) {
+                            ex2.printStackTrace();
 //                    sink.error(ex);
-                    sink.error(ex2);
+                            sink.error(ex2);
+                        }
+                    }
                 }
-//                }
-            }
-            return rsc;
-        }));
+            });
+        })).subscribeOn(scheduler);
     }
 }
