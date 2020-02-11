@@ -19,7 +19,7 @@ public class ItemRepo {
     @Resource
     private DataSourceProvider dataSourceProvider;
 
-    String query = "select data from items";
+    String query = "select * from items";
 
     private Scheduler scheduler = Schedulers.newBoundedElastic(100, Integer.MAX_VALUE, "myThreads");
 
