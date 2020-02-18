@@ -7,18 +7,20 @@ import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Mono;
 
+import javax.sql.DataSource;
+
 public class R2DBCOnJdbcConnectionFactory implements ConnectionFactory {
 
-    private DataSourceProvider dataSourceProvider;
+    private DataSource dataSource;
 
     @Autowired
-    public R2DBCOnJdbcConnectionFactory(DataSourceProvider dataSourceProvider) {
-        this.dataSourceProvider = dataSourceProvider;
+    public R2DBCOnJdbcConnectionFactory(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     @Override
     public Publisher<? extends Connection> create() {
-        return Mono.defer(()->Mono.just(new R2DBCOnJdbcConnection(dataSourceProvider)));
+        return Mono.defer(()->Mono.just(new R2DBCOnJdbcConnection(dataSource)));
     }
 
     @Override

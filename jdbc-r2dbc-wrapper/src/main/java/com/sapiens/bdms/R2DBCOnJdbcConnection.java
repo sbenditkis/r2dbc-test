@@ -6,21 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Mono;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import javax.annotation.Resource;
+import javax.sql.DataSource;
 import java.sql.SQLException;
 
 public class R2DBCOnJdbcConnection implements Connection {
 
     private final java.sql.Connection jdbcConnection;
-    private DataSourceProvider dataSourceProvider;
     private boolean autoCommit;
     private IsolationLevel isolationLevel;
 
     @Autowired
-    public R2DBCOnJdbcConnection(DataSourceProvider dataSourceProvider) {
-        this.dataSourceProvider = dataSourceProvider;
+    public R2DBCOnJdbcConnection(DataSource dataSource) {
         try {
-            this.jdbcConnection = dataSourceProvider.getDataSource().getConnection();
+            this.jdbcConnection = dataSource.getConnection();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
