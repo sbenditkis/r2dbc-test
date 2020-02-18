@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
 @Component("personRepoImpl")
-@Profile("PG")
+@Profile({"PG", "JDBC-PG"})
 public class PersonRepoPostgresImpl implements PersonRepoCustom {
 
     @Autowired

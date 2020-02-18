@@ -4,8 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>spring-r2dbc-test</artifactId>
-        <groupId>org.example</groupId>
+        <groupId>com.sapiens.bdms</groupId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -14,8 +15,8 @@
     <dependencies>
         <dependency>
             <groupId>io.r2dbc</groupId>
-            <artifactId>r2dbc-proxy</artifactId>
-            <version>0.8.1.RELEASE</version>
+            <artifactId>r2dbc-spi</artifactId>
+            <version>0.8.0.RELEASE</version>
         </dependency>
     </dependencies>
 

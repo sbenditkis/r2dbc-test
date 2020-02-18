@@ -1,10 +1,11 @@
 package com.sapiens.tests.r2dbc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sapiens.tests.r2dbc.repo.JsonToMapConverter;
-import com.sapiens.tests.r2dbc.repo.JsonToStringConverter;
-import com.sapiens.tests.r2dbc.repo.MapToJsonConverter;
-import com.sapiens.tests.r2dbc.repo.StringToJsonConverter;
+import com.sapiens.bdms.DataSourceProvider;
+import com.sapiens.bdms.R2DBCOnJdbcConnectionFactory;
+import com.sapiens.tests.r2dbc.repo.*;
+import io.r2dbc.pool.ConnectionPool;
+import io.r2dbc.pool.ConnectionPoolConfiguration;
 import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
 import io.r2dbc.postgresql.PostgresqlConnectionFactory;
 import io.r2dbc.spi.ConnectionFactory;
@@ -15,29 +16,29 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration;
 import org.springframework.data.r2dbc.convert.R2dbcCustomConversions;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@Profile("PG")
-public class R2DBCPostgresConfiguration extends AbstractR2dbcConfiguration {
+@Profile("JDBC-PG")
+public class R2DBCJdbcConfiguration extends AbstractR2dbcConfiguration {
 
+    @Bean
     public ConnectionFactory connectionFactory() {
-//        return new H2ConnectionFactory(
-//                H2ConnectionConfiguration.builder()
-//                        .url("mem:testdb;DB_CLOSE_DELAY=-1;")
-//                        .username("sa")
-//                        .build()
-//        );
-    return new PostgresqlConnectionFactory(
-            PostgresqlConnectionConfiguration.builder()
-                    .host("localhost")
-                    .database("dec_test1")
-                    .username("postgres")
-                    .password("postgres")
-                    .build()
-    );
+        ConnectionFactory cf = new R2DBCOnJdbcConnectionFactory(dataSourceProvider());
+//        ConnectionPoolConfiguration configuration = ConnectionPoolConfiguration.builder(cf)
+//                .maxIdleTime(Duration.ofMillis(1000))
+//                .maxSize(50)
+//                .build();
+//        return new ConnectionPool(configuration);
+        return cf;
     }
+
+    @Bean
+    DataSourceProvider dataSourceProvider() {
+        return new DataSourceProvider();
+    };
 
     @Bean
     @Override
@@ -47,6 +48,8 @@ public class R2DBCPostgresConfiguration extends AbstractR2dbcConfiguration {
         converters.add(new MapToJsonConverter(objectMapper()));
         converters.add(new StringToJsonConverter());
         converters.add(new JsonToStringConverter());
+        converters.add(new StringToPGObjectConverter());
+        converters.add(new PGObjectToStringConverter());
         return new R2dbcCustomConversions(getStoreConversions(), converters);
     }
 

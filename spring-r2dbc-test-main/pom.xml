@@ -6,20 +6,17 @@
         <artifactId>spring-r2dbc-test</artifactId>
         <groupId>com.sapiens.bdms</groupId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../</relativePath>
-
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>async-jdbc-wrapper</artifactId>
+    <artifactId>spring-r2dbc-test-main</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.2.9</version>
+            <groupId>com.sapiens.bdms</groupId>
+            <artifactId>jdbc-r2dbc-wrapper</artifactId>
+            <version>${parent.version}</version>
         </dependency>
     </dependencies>
-
 
 </project>

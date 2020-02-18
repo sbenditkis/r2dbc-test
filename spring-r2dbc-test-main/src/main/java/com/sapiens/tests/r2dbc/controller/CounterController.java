@@ -5,8 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+import reactor.core.scheduler.Scheduler;
 
 import java.time.Duration;
+import java.util.concurrent.ExecutorService;
 
 @RestController
 @RequestMapping("/counter")
@@ -15,7 +17,11 @@ public class CounterController {
     @GetMapping(path = "/stream", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
     public Flux<Long> counterStream() {
         System.out.println("counterStream()");
-        return Flux.interval(Duration.ofSeconds(1));
+        Flux<Long> flux = Flux.generate(() -> 1000l, (i, s) -> {
+            s.next(i);
+            return i + 1;
+        });
+        return flux.delaySequence(Duration.ofSeconds(1));
     }
 
     @GetMapping(path = "/list")
