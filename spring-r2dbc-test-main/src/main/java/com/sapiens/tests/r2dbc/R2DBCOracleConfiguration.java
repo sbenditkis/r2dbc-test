@@ -10,6 +10,7 @@ import io.r2dbc.pool.ConnectionPoolConfiguration;
 import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
 import io.r2dbc.postgresql.PostgresqlConnectionFactory;
 import io.r2dbc.spi.ConnectionFactory;
+import oracle.jdbc.pool.OracleConnectionPoolDataSource;
 import oracle.jdbc.pool.OracleDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,15 +45,31 @@ public class R2DBCOracleConfiguration extends AbstractR2dbcConfiguration {
 
     @Bean
     DataSource dataSource() {
-        OracleDataSource ods;
+//        ComboPooledDataSource cpds = new ComboPooledDataSource();
+//        try {
+//            cpds.setDriverClass( "oracle.jdbc.OracleDriver" ); //loads the jdbc driver
+//        } catch (PropertyVetoException e) {
+//            throw new RuntimeException(e);
+//        }
+//        cpds.setJdbcUrl( "dbc:oracle:thin:@localhost:1522/XEPDB1" );
+//        cpds.setUser("dec_test1");
+//        cpds.setPassword("decision");
+//        cpds.setMinPoolSize(5);
+//        cpds.setAcquireIncrement(5);
+//        cpds.setMaxPoolSize(50);
+//        return cpds;
+
+        OracleConnectionPoolDataSource ods;
         try {
-            ods = new OracleDataSource();
+            ods = new OracleConnectionPoolDataSource();
+            ods.setURL("jdbc:oracle:thin:@localhost:1522/XEPDB1");
+            ods.setUser("dec_test1");
+            ods.setPassword("decision");
+            ods.setMaxStatements(1000);
+            ods.setImplicitCachingEnabled(true);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ods.setURL("jdbc:oracle:thin:@localhost:1522/XEPDB1");
-        ods.setUser("dec_test1");
-        ods.setPassword("decision");
 
         return ods;
     };

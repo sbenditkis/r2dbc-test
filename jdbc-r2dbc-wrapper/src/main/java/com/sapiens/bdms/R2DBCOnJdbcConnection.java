@@ -6,19 +6,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Mono;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import javax.sql.ConnectionPoolDataSource;
 import javax.sql.DataSource;
+import javax.sql.PooledConnection;
 import java.sql.SQLException;
 
 public class R2DBCOnJdbcConnection implements Connection {
 
     private final java.sql.Connection jdbcConnection;
+    private PooledConnection pooledConnection;
     private boolean autoCommit;
     private IsolationLevel isolationLevel;
 
     @Autowired
     public R2DBCOnJdbcConnection(DataSource dataSource) {
         try {
-            this.jdbcConnection = dataSource.getConnection();
+            if (dataSource instanceof ConnectionPoolDataSource) {
+                this.pooledConnection = ((ConnectionPoolDataSource) dataSource).getPooledConnection();
+                this.jdbcConnection = pooledConnection.getConnection();
+            } else {
+                this.jdbcConnection = dataSource.getConnection();
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -37,7 +45,11 @@ public class R2DBCOnJdbcConnection implements Connection {
     public Publisher<Void> close() {
         return Mono.defer(()-> {
             try {
-                jdbcConnection.close();
+                if(pooledConnection!=null) {
+                    pooledConnection.close();
+                } else {
+                    jdbcConnection.close();
+                }
                 return Mono.empty();
             } catch (SQLException e) {
                 return Mono.error(e);
