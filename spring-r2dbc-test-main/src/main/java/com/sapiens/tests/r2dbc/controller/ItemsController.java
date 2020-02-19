@@ -4,9 +4,11 @@ import com.sapiens.tests.r2dbc.model.Item;
 import com.sapiens.tests.r2dbc.repo.ItemRepo;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
 
@@ -19,5 +21,10 @@ public class ItemsController {
     @GetMapping(value = "/stream", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
     public Flux<String> getAllItems() {
         return itemRepo.findAll().map(Item::getData);
+    }
+
+    @GetMapping("/{id}")
+    public Mono<Item> getItemById(@PathVariable("id") int id) {
+        return itemRepo.findById(id);
     }
 }

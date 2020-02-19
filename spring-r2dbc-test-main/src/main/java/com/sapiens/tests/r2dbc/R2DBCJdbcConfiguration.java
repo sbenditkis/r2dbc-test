@@ -3,7 +3,10 @@ package com.sapiens.tests.r2dbc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.sapiens.bdms.R2DBCOnJdbcConnectionFactory;
+import com.sapiens.bdms.R2DBCOnJdbcDialectProvider;
 import com.sapiens.tests.r2dbc.repo.*;
+import io.r2dbc.pool.ConnectionPool;
+import io.r2dbc.pool.ConnectionPoolConfiguration;
 import io.r2dbc.spi.ConnectionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +17,7 @@ import org.springframework.data.r2dbc.convert.R2dbcCustomConversions;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +32,7 @@ public class R2DBCJdbcConfiguration extends AbstractR2dbcConfiguration {
 //                .maxIdleTime(Duration.ofMillis(1000))
 //                .maxSize(50)
 //                .build();
-//        return new ConnectionPool(configuration);
+//        cf = new ConnectionPool(configuration);
         return cf;
     }
 
@@ -48,6 +52,11 @@ public class R2DBCJdbcConfiguration extends AbstractR2dbcConfiguration {
         cpds.setMaxPoolSize(50);
         return cpds;
     };
+
+    @Bean
+    R2DBCOnJdbcDialectProvider r2DBCOnJdbcDialectProvider() {
+        return new R2DBCOnJdbcDialectProvider();
+    }
 
     @Bean
     @Override

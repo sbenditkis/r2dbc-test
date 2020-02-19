@@ -33,7 +33,7 @@ public class R2DBCOnJdbcStatement implements Statement {
     @Override
     public Statement bind(int index, Object value) {
         try {
-            preparedStatement.setObject(index, value);
+            preparedStatement.setObject(index+1, value);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

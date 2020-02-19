@@ -29,8 +29,12 @@ public class R2DBCOnJdbcRow implements Row {
     }
 
     public Object get(String name) {
+        return get(metadata.getColumnIndex(name));
+    }
+
+    public Object get(int index) {
         try {
-            return resultSet.getObject(metadata.getColumnIndex(name));
+            return resultSet.getObject(index);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
