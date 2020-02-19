@@ -18,10 +18,12 @@ public class R2DBCOnJdbcResult implements Result {
 
     public R2DBCOnJdbcResult(ResultSet resultSet) {
         this.resultSet = resultSet;
-        try {
-            this.rowMetadata = new R2DBCOnJdbcRowMetadata(resultSet.getMetaData());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if(resultSet!=null) {
+            try {
+                this.rowMetadata = new R2DBCOnJdbcRowMetadata(resultSet.getMetaData());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -34,7 +36,7 @@ public class R2DBCOnJdbcResult implements Result {
     public <T> Publisher<T> map(BiFunction<Row, RowMetadata, ? extends T> mappingFunction) {
         return Flux.generate(() -> resultSet, (rs, sink)-> {
             try {
-                if(rs.next()) {
+                if(rs!=null && rs.next()) {
                     sink.next(new R2DBCOnJdbcRow(rs, rowMetadata));
                 } else {
                     sink.complete();

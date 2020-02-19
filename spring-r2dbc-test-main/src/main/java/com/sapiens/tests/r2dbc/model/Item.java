@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Map;
 
 @Data
@@ -16,5 +19,7 @@ public class Item {
     @Id
     private Integer id;
 
-    private String data;
+    private Map<String, Object> data;
+
+    private LocalDateTime created = LocalDateTime.now();
 }
