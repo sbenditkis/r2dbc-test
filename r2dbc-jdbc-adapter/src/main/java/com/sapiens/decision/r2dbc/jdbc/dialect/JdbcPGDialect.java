@@ -1,4 +1,4 @@
-package com.sapiens.bdms;
+package com.sapiens.decision.r2dbc.jdbc.dialect;
 
 import org.springframework.data.r2dbc.dialect.BindMarkersFactory;
 import org.springframework.data.r2dbc.dialect.PostgresDialect;

@@ -7,4 +7,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface PersonRepo extends ReactiveCrudRepository<Person, Integer>, PersonRepoCustom {
+    @Query("select * from Person where name=:name")
+    Flux<Person> getByName(String name);
 }

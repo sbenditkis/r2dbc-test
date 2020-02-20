@@ -1,4 +1,4 @@
-package com.sapiens.bdms;
+package com.sapiens.decision.r2dbc.jdbc;
 
 import io.r2dbc.spi.Result;
 import io.r2dbc.spi.Statement;
@@ -8,10 +8,7 @@ import reactor.core.publisher.Mono;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.Date;
 
 public class R2DBCOnJdbcStatement implements Statement {
 

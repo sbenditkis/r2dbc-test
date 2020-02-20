@@ -1,4 +1,4 @@
-package com.sapiens.bdms;
+package com.sapiens.decision.r2dbc.jdbc;
 
 import io.r2dbc.spi.Row;
 

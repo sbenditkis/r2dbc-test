@@ -1,5 +1,7 @@
-package com.sapiens.bdms;
+package com.sapiens.decision.r2dbc.jdbc.dialect;
 
+import com.sapiens.decision.r2dbc.jdbc.dialect.JdbcOracleDialect;
+import com.sapiens.decision.r2dbc.jdbc.dialect.JdbcPGDialect;
 import io.r2dbc.spi.ConnectionFactory;
 import org.springframework.data.r2dbc.dialect.DialectResolver;
 import org.springframework.data.r2dbc.dialect.R2dbcDialect;

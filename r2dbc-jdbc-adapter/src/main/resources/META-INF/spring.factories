@@ -1,0 +1,1 @@
+org.springframework.data.r2dbc.dialect.DialectResolver$R2dbcDialectProvider=com.sapiens.decision.r2dbc.jdbc.dialect.R2DBCOnJdbcDialectProvider

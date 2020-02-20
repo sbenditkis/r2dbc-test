@@ -1,17 +1,11 @@
 package com.sapiens.tests.r2dbc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.sapiens.bdms.R2DBCOnJdbcConnectionFactory;
-import com.sapiens.bdms.R2DBCOnJdbcDialectProvider;
+import com.sapiens.decision.r2dbc.jdbc.R2DBCOnJdbcConnectionFactory;
+import com.sapiens.decision.r2dbc.jdbc.dialect.R2DBCOnJdbcDialectProvider;
 import com.sapiens.tests.r2dbc.repo.*;
-import io.r2dbc.pool.ConnectionPool;
-import io.r2dbc.pool.ConnectionPoolConfiguration;
-import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
-import io.r2dbc.postgresql.PostgresqlConnectionFactory;
 import io.r2dbc.spi.ConnectionFactory;
 import oracle.jdbc.pool.OracleConnectionPoolDataSource;
-import oracle.jdbc.pool.OracleDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -22,9 +16,7 @@ import org.springframework.data.relational.core.mapping.NamingStrategy;
 import org.springframework.data.relational.core.mapping.RelationalPersistentProperty;
 
 import javax.sql.DataSource;
-import java.beans.PropertyVetoException;
 import java.sql.SQLException;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 

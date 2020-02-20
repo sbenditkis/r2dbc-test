@@ -10,7 +10,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>jdbc-r2dbc-wrapper</artifactId>
+    <artifactId>r2dbc-jdbc-adapter</artifactId>
 
     <dependencies>
         <dependency>

@@ -14,8 +14,14 @@
     <dependencies>
         <dependency>
             <groupId>com.sapiens.bdms</groupId>
-            <artifactId>jdbc-r2dbc-wrapper</artifactId>
+            <artifactId>r2dbc-jdbc-adapter</artifactId>
             <version>${parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sapiens.bdms</groupId>
+            <artifactId>r2dbc-jdbc-adapter</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
